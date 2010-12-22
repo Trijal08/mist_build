@@ -44,7 +44,7 @@ Common options that apply to both of non-A/B and A/B OTAs
       For incremental OTAs, the default value is based on the source
       target-file, not the target build.
 
-  --override_timestamp
+  --override_timestamp'IMAGES/*',
       Intentionally generate an incremental OTA that updates from a newer build
       to an older one (based on timestamp comparison), by setting the downgrade
       flag in the package metadata. This differs from --downgrade flag, as we
@@ -251,6 +251,10 @@ A/B OTA specific options
 
   --max_threads
       Specify max number of threads allowed when generating A/B OTA
+      
+  --backup <boolean>
+      Enable or disable the execution of backuptool.sh.
+      Disabled by default.
 """
 
 from __future__ import print_function
@@ -325,7 +329,7 @@ OPTIONS.enable_lz4diff = False
 OPTIONS.vabc_compression_param = None
 OPTIONS.security_patch_level = None
 OPTIONS.max_threads = None
-
+OPTIONS.backuptool = False
 
 POSTINSTALL_CONFIG = 'META/postinstall_config.txt'
 DYNAMIC_PARTITION_INFO = 'META/dynamic_partitions_info.txt'
@@ -1205,6 +1209,8 @@ def main(argv):
       else:
         raise ValueError("Cannot parse value %r for option %r - only "
                          "integers are allowed." % (a, o))
+    elif o == "--backup":
+      OPTIONS.backuptool = True
     else:
       return False
     return True
@@ -1257,6 +1263,7 @@ def main(argv):
                                  "vabc_compression_param=",
                                  "security_patch_level=",
                                  "max_threads=",
+                                 "backup=",
                              ], extra_option_handler=option_handler)
   common.InitLogging()
 
