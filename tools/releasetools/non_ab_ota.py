@@ -212,6 +212,8 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
   # Dump fingerprints
   script.Print("Target: {}".format(target_info.fingerprint))
 
+  script.AppendExtra("ifelse(is_mounted(\"/system\"), unmount(\"/system\"));")
+
   android_version = target_info.GetBuildProp("ro.build.version.release")
   mist_version = target_info.GetBuildProp("ro.mist.version")
   build_id = target_info.GetBuildProp("ro.build.id")
