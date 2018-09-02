@@ -214,6 +214,29 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
   # Dump fingerprints
   script.Print("Target: {}".format(target_info.fingerprint))
 
+  android_version = target_info.GetBuildProp("ro.build.version.release")
+  build_id = target_info.GetBuildProp("ro.build.id")
+  build_date = target_info.GetBuildProp("ro.build.date")
+  security_patch = target_info.GetBuildProp("ro.build.version.security_patch")
+  device = target_info.GetBuildProp("ro.mist.device")
+  mistbuild = target_info.GetBuildProp("ro.mist.base.version")
+  script.Print("----------------------------------------------");
+  script.Print("         __  __ _____  _____ _______           ");
+  script.Print("        |  \/  |_   _|/ ____|__   __|          ");
+  script.Print("        | \  / | | | | (___    | |             ");
+  script.Print("        | |\/| | | |  \___ \   | |             ");
+  script.Print(".       | |  | |_| |_ ____) |  | |             ");
+  script.Print("        |_|  |_|_____|_____/   |_|             ");
+  script.Print("         ____Beyond The Clouds____             ");
+  script.Print("                                               ");
+  script.Print("----------------------------------------------");
+  script.Print(" Android version:  %s"%(android_version));
+  script.Print(" Mist version   :  %s"%(mistbuild));
+  script.Print(" Build id       :  %s"%(build_id));
+  script.Print(" Build date     :  %s"%(build_date));
+  script.Print(" Security patch :  %s"%(security_patch));
+  script.Print(" Device         :  %s"%(device));
+  script.Print("----------------------------------------------");
   script.AppendExtra("ifelse(is_mounted(\"/system\"), unmount(\"/system\"));")
   device_specific.FullOTA_InstallBegin()
 
