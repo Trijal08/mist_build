@@ -3420,7 +3420,10 @@ class BlockDifference(object):
     if not self.src:
       # write the output unconditionally
       script.Print(" ")
-      script.Print("Flashing Cherish System files...")
+      script.Print("Flashing Cherish %s partition..." % (self.partition,))
+    else:
+      script.Print(" ")
+      script.Print("Flashing Cherish %s partition after verification." % (self.partition,))
 
     if progress:
       script.ShowProgress(progress, 0)
@@ -3520,6 +3523,8 @@ class BlockDifference(object):
 
   def WritePostInstallVerifyScript(self, script):
     partition = self.partition
+    script.Print(" ")
+    script.Print('Verifying Cherish %s partition...' % (partition,))
     # Unlike pre-install verification, clobbered_blocks should not be ignored.
     ranges = self.tgt.care_map
     ranges_str = ranges.to_string_raw()
@@ -3537,7 +3542,11 @@ class BlockDifference(object):
               self.device, ranges_str,
               self._HashZeroBlocks(self.tgt.extended.size())))
       script.Print(" ")
-      script.Print("Verified Cherish System files...")
+      script.Print('Verified Cherish %s files.' % (partition,))
+      if partition == "system":
+        code = ErrorCode.SYSTEM_NONZERO_CONTENTS
+      else:
+        code = ErrorCode.VENDOR_NONZERO_CONTENTS
       script.AppendExtra(
           'else\n'
           '  abort("E%d: %s partition has unexpected non-zero contents after '
@@ -3545,7 +3554,7 @@ class BlockDifference(object):
           'endif;' % (code, partition))
     else:
       script.Print(" ")
-      script.Print("Verified Cherish System files...")
+      script.Print('Verified Cherish %s files.' % (partition,))
 
     if partition == "system":
       code = ErrorCode.SYSTEM_UNEXPECTED_CONTENTS
