@@ -909,7 +909,6 @@ function lunch()
     fixup_common_out_dir
 
     set_stuff_for_environment
-    [[ -n "${ANDROID_QUIET_BUILD:-}" ]] || printconfig
 
 #    if [ "${TARGET_BUILD_VARIANT}" = "userdebug" ] && [[  -z "${ANDROID_QUIET_BUILD}" ]]; then
 #      echo
@@ -930,6 +929,8 @@ function lunch()
     echo "";
     cat $(gettop)/build/make/mist_ascii_logo;
     echo"";
+
+    [[ -n "${ANDROID_QUIET_BUILD:-}" ]] || printconfig
 }
 
 unset COMMON_LUNCH_CHOICES_CACHE
