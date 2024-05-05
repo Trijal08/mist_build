@@ -36,7 +36,7 @@ PRODUCT_PACKAGES += \
     Browser2
 endif
 
-ifeq ($(CHERISH_BUILD),)
+ifeq ($(MIST_BUILD),)
 PRODUCT_PACKAGES += \
     Camera2 \
     LatinIME
