@@ -220,7 +220,7 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
   script.AppendExtra("ifelse(is_mounted(\"/system\"), unmount(\"/system\"));")
 
   android_version = target_info.GetBuildProp("ro.build.version.release")
-  cherish_version = target_info.GetBuildProp("ro.cherish.version")
+  mist_version = target_info.GetBuildProp("ro.mist.version")
   build_id = target_info.GetBuildProp("ro.build.id")
   build_date = target_info.GetBuildProp("ro.build.date")
   security_patch = target_info.GetBuildProp("ro.build.version.security_patch")
@@ -228,19 +228,18 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
 
   script.Print("===================================================");
   script.Print("---------------------------------------------------");
-  script.Print("     __                         __      __         ");
-  script.Print("   / ____| |             (_)   | |    / __ \       ");
-  script.Print("  | |    | |__   ___ _ __ _ ___| |__ | \  / |___   ");
-  script.Print("  | |    | '_ \ / _ \ '__| / __| '_ \| |  | / __|  ");
-  script.Print("  | |____| | | |  __/ |  | \__ \ | | | /__\ \__ \  ");
-  script.Print("   \_____|_| |_|\___|_|  |_|___/_| |_|\____/|___/  ");
-  script.Print("                                                   ");
-  script.Print("                     CherishOS                     ");
-  script.Print("                  by hungphan2001                  ");
-  script.Print("---------------------------------------------------");
+  script.Print("                 __  __  _       _                 ");
+  script.Print("                |  \/  |(_)     | |                ");
+  script.Print("                | \  / | _  ___ | |_               ");
+  script.Print("                | |\/| || |/ __|| __|              ");
+  script.Print("                | |  | || |\__ \| |_               ");
+  script.Print("                |_|  |_||_||___/ \__|              ");
+  script.Print("                    Project MistOS                 ");
+  script.Print("                  -Beyond The Clouds-              ");
+  script.Print(" --------------------------------------------------");
   script.Print("===================================================");
-  script.Print(" Android version: %s"%(android_version));
-  script.Print(" Cherish version: %s"%(cherish_version));
+  script.Print(" Android version  : %s"%(android_version));
+  script.Print(" Mist version     : %s"%(mist_version));
   script.Print(" Build id         : %s"%(build_id));
   script.Print(" Build date       : %s"%(build_date));
   script.Print(" Security patch   : %s"%(security_patch));
