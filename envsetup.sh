@@ -2152,6 +2152,85 @@ function aninja() {
     (\cd "${T}" && prebuilts/build-tools/linux-x86/bin/ninja -f out/combined-${TARGET_PRODUCT}.ninja "$@")
 }
 
+function peak() {
+    local device="$1"
+    local build_type="$2"
+
+    if [ -z "$device" ]; then
+        if [[ -n "$TARGET_PRODUCT" ]]; then
+            device=$(echo "$TARGET_PRODUCT" | sed -E 's/mist_([^_]+).*/\1/')
+            echo "No argument found for device, using TARGET_PRODUCT as device: $device"
+        else
+            echo "Correct usage: peak <device_codename> [build_type]"
+            echo "Available build types: user, userdebug, eng"
+            return 1
+        fi
+    fi
+
+    if [ -z "$build_type" ]; then
+        build_type="userdebug"
+    fi
+
+    case "$build_type" in
+        user|userdebug|eng)
+        lunch mist_"$device"-"$build_type"
+        ;;
+        *)
+        echo "Invalid build type."
+        echo "Available build types are: user, userdebug & eng"
+        ;;
+    esac
+}
+
+function climb() {
+    if [[ "$1" == "help" ]]; then
+        echo "Usage: climb [b|fb|sb] [-j<num_cores>]"
+        echo "   m   - Build bacon"
+        echo "   mb  - Fastboot update"
+        echo "   -j<num_cores>  - Specify the number of cores to use for the build"
+        return 0
+    fi
+
+    if [[ -z "$TARGET_PRODUCT" ]]; then
+        echo "Error: No device target set. Please use 'peak' or 'lunch' to set the target device."
+        return 1
+    fi
+
+    m installclean
+
+    local jCount=""
+    local cmd=""
+
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            -j*)
+                jCount="$1"
+                ;;
+            m|mb)
+                cmd="$1"
+                ;;
+            *)
+                echo "Error: Invalid argument mode. Please use 'm', 'mb', 'help', or a job count flag like '-j<number>'."
+                echo "Usage: climb [m|mb] [-j<num_cores>]"
+                return 1
+                ;;
+        esac
+        shift
+    done
+
+    case "$cmd" in
+        m)
+            make bacon ${jCount:--j$(nproc --all)}
+            ;;
+        mb)
+            make updatepackage ${jCount:--j$(nproc --all)}
+            ;;
+        "")
+            make ${jCount:--j$(nproc --all)}
+            ;;
+    esac
+}
+
 validate_current_shell
 set_global_paths
 source_vendorsetup
