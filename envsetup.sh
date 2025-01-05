@@ -1360,7 +1360,7 @@ function add_remote() {
     local remote_name="$1"
     local remote_url="$2"
     local manifest_path="android/snippets/mist.xml"
-    local exclusion_list=("android" "vendor/official_devices" "packages/apps/FaceUnlock" "vendor/gms")
+    local exclusion_list=("android" "vendor/official_devices" "packages/apps/FaceUnlock" "vendor/gms" "frameworks/base")
     if [[ -z "$remote_name" || -z "$remote_url" ]]; then
         echo "Usage: add_remote <remote_name> <remote_url>"
         return 1
