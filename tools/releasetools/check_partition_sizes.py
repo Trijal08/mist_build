@@ -231,7 +231,7 @@ class DynamicPartitionSizeChecker(object):
           "system_other_image_size" in info_dict):
         partitions_in_super.append("system_other")
       self._CheckSumOfPartitionSizes(max_size, partitions_in_super,
-                                     warn_limit, error_limit)
+                                     warn_limit)
 
     groups = info_dict.get("super_partition_groups", "").strip().split()
 
